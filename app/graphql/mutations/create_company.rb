@@ -5,7 +5,7 @@ class Mutations::CreateCompany < Mutations::BaseMutation
     argument :website, String, required: true
 
     field :company, Types::CompanyType, null: false
-    field :errors, [String], null: false
+    field :errors, [String], null: true
 
     def resolve(logo:, name:, email:, website:)
         company = Company.new(logo: logo, name: name, email: email, website: website)
