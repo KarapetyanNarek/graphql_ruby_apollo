@@ -14,7 +14,7 @@ class Mutations::DeleteCompany < Mutations::BaseMutation
             }
         else
             {
-                company: company,
+                company: nil,
                 errors: company.errors.full_messages
             }
         end

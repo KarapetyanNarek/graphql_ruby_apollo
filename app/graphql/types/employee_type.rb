@@ -4,7 +4,7 @@ module Types
     field :firstname, String, null: false
     field :lastname, String, null: true
     field :email, String, null: true
-    field :phone, Integer, null: true
+    field :phone, String, null: true
     field :company, Types::CompanyType, null: true
   end
 end

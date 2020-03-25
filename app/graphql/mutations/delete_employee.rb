@@ -6,7 +6,6 @@ class Mutations::DeleteEmployee < Mutations::BaseMutation
 
     def resolve(**args)
         employee = Employee.find(args[:id])
-
         if employee.destroy
             {
                 employee: employee,
