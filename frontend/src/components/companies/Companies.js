@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
+import gql from 'graphql-tag';
 
 const GET_COMPANIES = gql`
 {
@@ -16,9 +16,11 @@ const GET_COMPANIES = gql`
 
 const DELETE_COMPANY = gql`
  mutation DeleteCompany($id: ID){
-     deleteCompany(input: {id: $id}){
-         company { 
-             name }
+     deleteCompany(input: {id: $id}){  
+         company
+         { 
+             id
+         }
          errors
      }
  }`;
@@ -33,13 +35,12 @@ const Companies = () => {
     return (
         <React.Fragment>
             <div className="m-3">
-                <Link to='/addcompany' className="btn btn-lg btn-dark font-weight-bold">Add Company</Link>
+                <Link to='/companies/addcompany' className="btn btn-lg btn-dark font-weight-bold">Add Company</Link>
             </div>
 
             <div className="container-fluid">
                 <table className="table table-bordered table-dark col-md-12">
                     <tr>
-                        <th className="text-center">Company logo</th>
                         <th className="text-center">Company name</th>
                         <th className="text-center">Company email</th>
                         <th className="text-center">Company website</th>
@@ -63,19 +64,18 @@ const Companies = () => {
                     </tr>
                     {data.companies.map(company => {
                         return <tr key={company.id}>
-                            <td class="text-center align-middle">{company.logo}</td>
-                            <td class="text-center align-middle">{company.name}</td>
-                            <td class="text-center align-middle">{company.email}</td>
-                            <td class="text-center align-middle">{company.website}</td>
-                            <td class="text-center align-middle">Show</td>
-                            <td class="text-center align-middle">Edit</td>
-                            <td class="text-center align-middle">
+                            <td className="text-center align-middle">{company.name}</td>
+                            <td className="text-center align-middle">{company.email}</td>
+                            <td className="text-center align-middle">{company.website}</td>
+                            <td className="text-center align-middle"><Link to={`/companies/show/${company.id}`}  className="btn btn-secondary font-weight-bold w-100">Show</Link></td>
+                            <td className="text-center align-middle"><Link to={`/companies/edit/${company.id}`} className="btn btn-secondary font-weight-bold w-100">Edit</Link></td>
+                            <td className="text-center align-middle">
                                 <button onClick={()=> {
                                     if (window.confirm("Are you sure")){
                                         deleteCompany({variables: {id: company.id}});
                                     };
                                     window.location.reload();
-                                }}>Delete</button>
+                                }} className="btn btn-secondary font-weight-bold w-100">Delete</button>
                             </td>
                         </tr>
                     })}

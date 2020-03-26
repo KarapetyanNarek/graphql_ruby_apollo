@@ -73,9 +73,9 @@ const Employees = () => {
                             <td class="text-center align-middle">{employee.lastname}</td>
                             <td class="text-center align-middle">{employee.email}</td>
                             <td class="text-center align-middle">{employee.phone}</td>
-                            <td class="text-center align-middle"><Link to='/employees/show'>Show</Link></td>
-                            <td class="text-center align-middle">Edit</td>
-                            <td class="text-center align-middle"><button onClick={()=> {
+                            <td class="text-center align-middle"><Link to={`/employees/show/${employee.id}`} className="btn btn-secondary font-weight-bold w-100">Show</Link></td>
+                            <td class="text-center align-middle"><Link to={`/employees/edit/${employee.id}`} className="btn btn-secondary font-weight-bold w-100">Edit</Link></td>
+                            <td class="text-center align-middle"><button className="btn btn-secondary font-weight-bold w-100" onClick={()=> {
                                 if (window.confirm("Are you sure")) {
                                     deleteEmployee({variables: {id: employee.id}});
                                 }
