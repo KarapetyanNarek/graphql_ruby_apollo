@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {Link} from 'react-router-dom';
+import { Query } from 'react-apollo';
 
 const EMPLOYEE = gql`
 query Employee($id: Int!){
@@ -12,9 +13,6 @@ query Employee($id: Int!){
         companyId
         phone
         email
-        company {
-            name
-        }
     }
 }`;
 
@@ -41,6 +39,8 @@ const ShowEmployee = (props) => {
     if (loading) return <p>Loading ...</p>;
     if (error) return `Error ${error.message}`;
 
+    let companyID = data.employee.companyId;
+
     return (
         <div className="w-50 container mt-5">
             <table className="table table-bordered table-dark">
@@ -58,7 +58,13 @@ const ShowEmployee = (props) => {
                 </tr>
                 <tr>
                     <td className="text-center">Company name:</td>
-                    <td className="text-center">{data.employee.company.name}</td>
+                    <td className="text-center"><Query query={COMPANY} variables={{id: companyID}}>
+                        {({loading, error, data}) => {
+                            if (loading) return null;
+                            if (error) return `Error! ${error}`;
+
+                            return data.company.name
+                        }}</Query></td>
                 </tr>
                 <tr>
                     <td className="text-center">Employee firstname:</td>
@@ -84,3 +90,6 @@ const ShowEmployee = (props) => {
 }
 
 export default ShowEmployee;
+
+
+// {data.employee.company.name}

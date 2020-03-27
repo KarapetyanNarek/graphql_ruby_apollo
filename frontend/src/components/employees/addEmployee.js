@@ -28,7 +28,7 @@ const GET_COMPANIES = gql`
 
 
 const AddEmployee = () => {
-    let companyId, firstname, lastname, email, phone;
+    let companyId, firstname, lastname, email, phone, selectedOption;
     const [createEmployee] = useMutation(CREATE_EMPLOYEE);
 
     const { loading, error, data } = useQuery(GET_COMPANIES);
@@ -45,6 +45,7 @@ const AddEmployee = () => {
             <div class="container-fluid d-flex justify-content-center mt-5">
             <form onSubmit={e => {
                                 e.preventDefault();
+                                alert(e.selectedOption)                          
                                 createEmployee({ variables: {firstname: firstname.value, lastname: lastname.value, email: email.value, phone: phone.value}});
                                 firstname.value='';
                                 lastname.value='';
@@ -57,7 +58,7 @@ const AddEmployee = () => {
                 <h3 className="text-center mb-3 font-italic font-weight-bold">Add Employee</h3>
                 
                 <div className="form-group">
-                    <Select options={companies}/>      
+                    <Select options={companies} value={selectedOption}/>      
                 </div>
 
                 <div className="form-group">
