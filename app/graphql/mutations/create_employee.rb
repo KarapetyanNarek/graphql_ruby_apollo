@@ -3,7 +3,7 @@ class Mutations::CreateEmployee < Mutations::BaseMutation
     argument :firstname, String, required: true
     argument :lastname, String, required: true
     argument :email, String, required: true
-    argument :phone, Integer, required: true
+    argument :phone, String, required: true
 
     field :employee, Types::EmployeeType, null: true
     field :errors, [String], null: true

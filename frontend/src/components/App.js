@@ -10,6 +10,8 @@ import ShowCompany from './companies/showCompany';
 import EditCompany from './companies/editCompany';
 import ShowEmployee from './employees/showEmployee';
 import AddEmployee from './employees/addEmployee';
+import EditEmployee from './employees/editEmployee';
+
 
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
       <Route exact path='/employees' render={() => <Employees />} />
       <Route exact path='/addemployee' render={() => <AddEmployee />} />
       <Route path='/employees/show/:id' render={props => <ShowEmployee {...props}/>} />
+      <Route path='/employees/edit/:id' render={props => <EditEmployee {...props}/>} />
     </div>
   );
 }

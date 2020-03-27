@@ -1,6 +1,6 @@
 module Types
   class EmployeeType < Types::BaseObject
-    field :id, Integer, null: false
+    field :id, ID, null: false
     field :company_id, Integer, null: false
     field :firstname, String, null: false
     field :lastname, String, null: true

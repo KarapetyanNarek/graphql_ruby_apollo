@@ -9,6 +9,6 @@
 5.times do
     company = Company.create(logo: Faker::Name.name, name: Faker::Name.name, email: Faker::Internet.email, website: Faker::Internet.url)
     5.times do
-        company.employees.create(firstname: Faker::Name.name, lastname: Faker::Name.name, email: Faker::Name.name, phone: Faker::Number.number)
+        company.employees.create(firstname: Faker::Name.name, lastname: Faker::Name.name, email: Faker::Name.name, phone: Faker::PhoneNumber.cell_phone)
     end
 end

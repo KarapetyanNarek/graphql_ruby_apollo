@@ -4,7 +4,7 @@ class Mutations::UpdateEmployee < Mutations::BaseMutation
     argument :firstname, String, required: false
     argument :lastname, String, required: false
     argument :email, String, required: false
-    argument :phone, Integer, required: false
+    argument :phone, String, required: false
 
     field :employee, Types::EmployeeType, null: true
     field :errors, [String], null: true

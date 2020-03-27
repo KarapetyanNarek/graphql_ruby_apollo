@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import Select from 'react-select';
 
 const CREATE_EMPLOYEE = gql`
- mutation CreateEmployee($companyId: Integer, $firstname: String, $lastname: String, $email: String, $phone: String){
+ mutation CreateEmployee($companyId: ID, $firstname: String, $lastname: String, $email: String, $phone: String){
      createEmployee(input:{companyId: $companyId, firstname: $firstname, lastname: $lastname, email: $email, phone: $phone}){
         employee
         {
@@ -28,7 +28,6 @@ const GET_COMPANIES = gql`
 
 
 const AddEmployee = () => {
-    let companyId, firstname, lastname, email, phone, selectedOption;
     const [createEmployee] = useMutation(CREATE_EMPLOYEE);
 
     const { loading, error, data } = useQuery(GET_COMPANIES);
@@ -38,19 +37,16 @@ const AddEmployee = () => {
 
     let companies = data.companies.map(company => {
         return {label: company.name, value: company.id}
-    })
+    }) 
 
     return (
         <React.Fragment>
             <div class="container-fluid d-flex justify-content-center mt-5">
             <form onSubmit={e => {
                                 e.preventDefault();
-                                alert(e.selectedOption)                          
-                                createEmployee({ variables: {firstname: firstname.value, lastname: lastname.value, email: email.value, phone: phone.value}});
-                                firstname.value='';
-                                lastname.value='';
-                                email.value='';
-                                phone.value='';
+                               
+                                console.log(typeof e.target.phone.value)
+                                createEmployee({ variables: {companyId: parseInt(e.target.selected.value, 10), firstname: e.target.firstname.value, lastname: e.target.lastname.value, email: e.target.email.value, phone: e.target.phone.value}});
                                 window.location.replace("/employees");
                                 }
                             }>
@@ -58,23 +54,24 @@ const AddEmployee = () => {
                 <h3 className="text-center mb-3 font-italic font-weight-bold">Add Employee</h3>
                 
                 <div className="form-group">
-                    <Select options={companies} value={selectedOption}/>      
+                    <Select options={companies} name="selected"/>      
+                </div>
+                            
+
+                <div className="form-group">
+                    <input type="text" className="form-control" name="firstname" placeholder="firstname" />
                 </div>
 
                 <div className="form-group">
-                    <input type="text" className="form-control" name="firstname" ref={node => {firstname = node;}} placeholder="firstname" />
+                    <input type="text" className="form-control" name="lastname" placeholder="lastname" />
                 </div>
 
                 <div className="form-group">
-                    <input type="text" className="form-control" name="lastname" ref={node => {lastname = node;}} placeholder="lastname" />
+                    <input type="emial" className="form-control" name="email" placeholder="email" />
                 </div>
 
                 <div className="form-group">
-                    <input type="emial" className="form-control" name="email" ref={node => {email = node;}} placeholder="email" />
-                </div>
-
-                <div className="form-group">
-                    <input type="text" className="form-control" name="phone" ref={node => {phone = node;}} placeholder="phone" />
+                    <input type="text" className="form-control" name="phone" placeholder="phone" />
                 </div>
 
                 <button type="submit" className="btn btn-lg btn btn-dark font-weight-bold btn-block">Add Employee</button>
